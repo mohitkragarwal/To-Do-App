@@ -46,4 +46,9 @@ public class TaskService {
         taskdao.save(taskstemp);
         return new ResponseEntity<>("Updated",HttpStatus.OK);
     }
+
+    public ResponseEntity<String> deletetask(Integer id) {
+        taskdao.deleteById(id);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
+    }
 }

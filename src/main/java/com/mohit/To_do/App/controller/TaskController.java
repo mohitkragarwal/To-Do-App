@@ -4,10 +4,7 @@ import com.mohit.To_do.App.model.Tasks;
 import com.mohit.To_do.App.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,12 @@ public class TaskController {
     @PostMapping("add")
     public ResponseEntity<String> addTask(@RequestBody Tasks task){
        return taskservice.addTask(task);
+    }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<String> updateTaskById(@RequestBody Tasks task, @PathVariable Integer id)
+    {
+        return taskservice.updateTaskById(task,id);
     }
 
 

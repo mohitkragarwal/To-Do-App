@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -29,5 +30,20 @@ public class TaskService {
         System.out.println("Status: " + task.isStatus());
         System.out.println("Date: " + task.getLocalDate());
         return new ResponseEntity<>("success",HttpStatus.CREATED);
+    }
+
+    //We are using the id to fetch the record from DB and update it.
+    // we can  directly update it if we have id in the body but to avoid that we are using this way to update
+    //This approach helps prevent mistakes where the ID in the request body
+    // might accidentally be different from the ID in the URL
+    public ResponseEntity<String> updateTaskById(Tasks task, Integer id) {
+        Tasks taskstemp=taskdao.findById(id).get();
+        taskstemp.setTaskId(id);
+        taskstemp.setTaskDescription(task.getTaskDescription());
+        taskstemp.setLocalDate(task.getLocalDate());
+
+        System.out.println(taskstemp.getTaskDescription());
+        taskdao.save(taskstemp);
+        return new ResponseEntity<>("Updated",HttpStatus.OK);
     }
 }
